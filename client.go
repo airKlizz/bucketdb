@@ -57,7 +57,7 @@ func (c Client[O]) Create(ctx context.Context, obj O) error {
 		return fmt.Errorf("failed to put the object into the bucket: %v", err)
 	}
 	for _, index := range obj.Index() {
-		_, err = c.minioClient.PutObject(ctx, c.bucketName, index,
+		_, err = c.minioClient.PutObject(ctx, c.bucketName, c.indexKey(index),
 			bytes.NewReader([]byte{}), 0, minio.PutObjectOptions{})
 		if err != nil {
 			return fmt.Errorf("failed to put the index into the bucket: %v", err)
